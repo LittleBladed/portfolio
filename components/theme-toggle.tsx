@@ -1,14 +1,42 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+
+function resolvedLight(): boolean {
+  try {
+    const stored = localStorage.getItem("theme");
+    if (stored) return stored === "light";
+  } catch {
+    // private mode etc.
+  }
+  return matchMedia("(prefers-color-scheme: light)").matches;
+}
+
+function apply(light: boolean) {
+  const root = document.documentElement;
+  if (light) {
+    root.setAttribute("data-theme", "light");
+  } else {
+    root.removeAttribute("data-theme");
+  }
+}
+
 export function ThemeToggle() {
+  const pathname = usePathname();
+
+  // Re-apply after every navigation, in case anything reset the attribute.
+  useEffect(() => {
+    apply(resolvedLight());
+  }, [pathname]);
+
   function toggle() {
-    const root = document.documentElement;
-    const light = !root.classList.contains("light");
-    root.classList.toggle("light", light);
+    const light = document.documentElement.getAttribute("data-theme") !== "light";
+    apply(light);
     try {
       localStorage.setItem("theme", light ? "light" : "dark");
     } catch {
-      // private mode etc. — theme still applies for this page view
+      // theme still applies for this page view
     }
   }
 
@@ -19,7 +47,7 @@ export function ThemeToggle() {
       aria-label="Toggle light mode"
       className="text-muted transition-colors hover:text-foreground"
     >
-      {/* sun (shown in dark mode, the default) */}
+      {/* sun (shown in dark mode) */}
       <svg
         className="h-4 w-4 light:hidden"
         viewBox="0 0 24 24"

@@ -23,8 +23,8 @@ const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
 });
 
-// Dark is the default; only an explicit "light" choice switches.
-const themeScript = `(function(){try{if(localStorage.getItem("theme")==="light")document.documentElement.classList.add("light")}catch(e){}})()`;
+// Stored choice wins; otherwise follow the system preference (dark if none).
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");var light=t?t==="light":matchMedia("(prefers-color-scheme: light)").matches;if(light)document.documentElement.setAttribute("data-theme","light")}catch(e){}})()`;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

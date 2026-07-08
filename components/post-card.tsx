@@ -11,7 +11,7 @@ export function PostRow({ post, locale }: { post: Post; locale: Locale }) {
     <li>
       <Link
         href={`/${locale}/posts/${post.slug}`}
-        className="group flex items-center justify-between gap-6 py-5"
+        className="group flex items-center justify-between gap-5 py-5"
       >
         <div className="min-w-0">
           {post.publishedAt && (
@@ -39,6 +39,13 @@ export function PostRow({ post, locale }: { post: Post; locale: Locale }) {
             className="hidden h-20 w-32 shrink-0 rounded-lg border border-line object-cover sm:block"
           />
         )}
+
+        <span
+          aria-hidden
+          className="shrink-0 text-faint transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+        >
+          →
+        </span>
       </Link>
     </li>
   );

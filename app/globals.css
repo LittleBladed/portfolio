@@ -1,8 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Dark is the default; .light overrides. */
-@custom-variant light (&:where(.light, .light *));
+/* Dark is the default; an explicit data-theme="light" on <html> overrides.
+   Kept as a data attribute (never server-rendered) so client-side
+   navigation can't reset it. */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 :root {
   --background: #141312;
@@ -15,7 +17,7 @@
   --chip: #232120;
 }
 
-.light {
+[data-theme="light"] {
   --background: #faf9f7;
   --foreground: #1c1917;
   --muted: #57534e;
@@ -105,7 +107,7 @@ body {
   --tw-prose-pre-code: #d6d3cd;
 }
 
-.light .prose {
+[data-theme="light"] .prose {
   --tw-prose-body: #44403c;
   --tw-prose-pre-bg: #1c1917;
   --tw-prose-pre-code: #e7e5e4;
