@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# prisma (generated client + local sqlite db)
+/lib/generated/prisma
+*.db
+*.db-journal
+
+# local image uploads (Vercel Blob in production)
+/public/uploads

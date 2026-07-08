@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  summary     String
+  content     String
+  // Optional Dutch translations; English is the fallback.
+  titleNl     String?
+  summaryNl   String?
+  contentNl   String?
+  coverImage  String?
+  tags        String    @default("")
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
