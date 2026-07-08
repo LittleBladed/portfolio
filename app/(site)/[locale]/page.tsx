@@ -18,8 +18,12 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
   return (
     <div className="space-y-16">
       <section className="fade-up space-y-6">
-        <p className="max-w-[36ch] font-display text-2xl font-medium leading-snug tracking-tight text-foreground">
+        <h1 className="max-w-[36ch] font-display text-2xl font-medium leading-snug tracking-tight text-foreground">
           {dict.intro.lead}
+        </h1>
+
+        <p className="max-w-xl text-[15px] leading-relaxed text-muted">
+          {dict.intro.sub}
         </p>
 
         <p className="flex items-center gap-2.5 text-sm text-muted">

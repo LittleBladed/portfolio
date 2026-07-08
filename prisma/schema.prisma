@@ -18,6 +18,7 @@ model Post {
   summaryNl   String?
   contentNl   String?
   coverImage  String?
+  thumbnail   String?
   tags        String    @default("")
   publishedAt DateTime?
   createdAt   DateTime  @default(now())

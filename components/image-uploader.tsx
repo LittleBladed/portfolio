@@ -1,22 +1,21 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const inputClass =
   "w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-muted/70 focus:border-accent";
 
 export function ImageUploader() {
   const fileRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [url, setUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  passwordRef.current = password;
 
-  async function upload() {
-    const file = fileRef.current?.files?.[0];
-    if (!file) return;
-
+  async function uploadFile(file: File) {
     setBusy(true);
     setError(null);
     setUrl(null);
@@ -24,7 +23,7 @@ export function ImageUploader() {
 
     const body = new FormData();
     body.append("file", file);
-    body.append("password", password);
+    body.append("password", passwordRef.current);
 
     try {
       const res = await fetch("/admin/upload", { method: "POST", body });
@@ -40,6 +39,22 @@ export function ImageUploader() {
       setBusy(false);
     }
   }
+
+  // Paste an image anywhere on the page to upload it.
+  useEffect(() => {
+    function onPaste(event: ClipboardEvent) {
+      const file = Array.from(event.clipboardData?.items ?? [])
+        .find((item) => item.kind === "file" && item.type.startsWith("image/"))
+        ?.getAsFile();
+      if (file) {
+        event.preventDefault();
+        void uploadFile(file);
+      }
+    }
+    document.addEventListener("paste", onPaste);
+    return () => document.removeEventListener("paste", onPaste);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const snippet = url ? `![Describe the image](${url})` : "";
 
@@ -74,13 +89,21 @@ export function ImageUploader() {
         />
         <button
           type="button"
-          onClick={upload}
+          onClick={() => {
+            const file = fileRef.current?.files?.[0];
+            if (file) void uploadFile(file);
+          }}
           disabled={busy}
           className="rounded-full border border-line bg-white px-4 py-1.5 text-sm font-medium shadow-sm transition-colors hover:border-zinc-300 disabled:opacity-50"
         >
           {busy ? "Uploading…" : "Upload"}
         </button>
       </div>
+
+      <p className="text-xs text-muted">
+        Tip: you can also paste an image from your clipboard anywhere on this
+        page (Cmd/Ctrl+V) to upload it.
+      </p>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 

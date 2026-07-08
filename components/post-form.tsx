@@ -73,6 +73,22 @@ export function PostForm({ post }: { post?: Post }) {
         />
       </label>
 
+      <label className="block space-y-2">
+        <span className={labelClass}>
+          Thumbnail URL{" "}
+          <span className={hintClass}>
+            (optional — shown next to the entry on the home page; landscape
+            crops best. No image on the home page when empty)
+          </span>
+        </span>
+        <input
+          name="thumbnail"
+          defaultValue={post?.thumbnail ?? ""}
+          placeholder="https://… or /uploads/…"
+          className={`${inputClass} font-mono`}
+        />
+      </label>
+
       <ImageUploader />
 
       <details

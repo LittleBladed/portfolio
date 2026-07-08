@@ -70,6 +70,7 @@ export async function savePost(formData: FormData) {
     summaryNl: optional(formData, "summaryNl"),
     contentNl: optional(formData, "contentNl"),
     coverImage: optional(formData, "coverImage"),
+    thumbnail: optional(formData, "thumbnail"),
     tags,
     publishedAt,
   };

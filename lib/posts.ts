@@ -36,6 +36,11 @@ export function parseTags(post: Post): string[] {
     .filter(Boolean);
 }
 
+/** Only the dedicated list thumbnail; no image otherwise. */
+export function postThumbnail(post: Post): string | null {
+  return post.thumbnail ?? null;
+}
+
 export async function getPublishedPosts(): Promise<Post[]> {
   return prisma.post.findMany({
     where: { publishedAt: { not: null } },

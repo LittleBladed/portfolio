@@ -11,7 +11,8 @@ const en = {
     contact: "contact",
   },
   intro: {
-    lead: "Freelance full-stack engineer in Belgium. I build and scale web platforms, mobile apps, and the infrastructure behind them, for startups and established organisations.",
+    lead: "Freelance full-stack engineer.",
+    sub: "Platforms, apps, bots, games and the infrastructure behind them. The entries below cover what I built and what it taught me.",
     availability: "Currently available for new projects",
     description:
       "Freelance full-stack engineer in Belgium, building and scaling web platforms, mobile apps, and infrastructure.",
@@ -39,7 +40,8 @@ const nl: typeof en = {
     contact: "contact",
   },
   intro: {
-    lead: "Freelance full-stack engineer in België. Ik bouw en schaal webplatformen, mobiele apps en de infrastructuur erachter, voor startups én gevestigde organisaties.",
+    lead: "Freelance full-stack engineer.",
+    sub: "Platformen, apps, bots, games en de infrastructuur erachter. De artikels hieronder gaan over wat ik bouwde en wat het me leerde.",
     availability: "Momenteel beschikbaar voor nieuwe projecten",
     description:
       "Freelance full-stack engineer in België. Bouwt en schaalt webplatformen, mobiele apps en infrastructuur.",

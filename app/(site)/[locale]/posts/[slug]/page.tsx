@@ -93,7 +93,28 @@ export default async function PostPage(props: Props) {
       )}
 
       <div className="prose prose-zinc max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            // Show the image description (alt text) as a caption below.
+            // Spans with block display keep the HTML valid inside <p>.
+            img: ({ src, alt }) => (
+              <span className="my-8 block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={typeof src === "string" ? src : undefined}
+                  alt={alt ?? ""}
+                  className="my-0 w-full"
+                />
+                {alt && (
+                  <span className="mt-1 block text-[13px] leading-snug text-faint">
+                    {alt}
+                  </span>
+                )}
+              </span>
+            ),
+          }}
+        >
           {localized.content}
         </ReactMarkdown>
       </div>
